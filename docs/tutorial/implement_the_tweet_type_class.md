@@ -150,6 +150,8 @@ You will iterate over the items in `$validatorConfiguration` and:
 - check that provided arguments are known and valid:
   - `TweetAuthorValidator` accepts a non-empty array of valid Twitter usernames
 
+> This `validateValidatorConfiguration` example, will work only for `TweetValueValidator` configuration in `$validatorConfigurationSchema`. Others will generate validation errors.
+
 ``` php
 // eZ/Publish/FieldType/Tweet/Type.php
 
@@ -159,7 +161,7 @@ public function validateValidatorConfiguration( $validatorConfiguration )
     foreach ($validatorConfiguration as $validatorIdentifier => $constraints) {
         // Report unknown validators
         if ($validatorIdentifier !== 'TweetValueValidator') {
-            $validationErrors[] = new ValidationError("Validator '$validatorIdentifier' is unknown");
+            $validationErrors[] = new ValidationError("Validator '$validatorIdentifier' is unknown for " . get_class($this));
             continue;
         }
         // Validate arguments from TweetValueValidator
